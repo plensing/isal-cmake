@@ -29,8 +29,11 @@ ExternalProject_add(
         COMMAND ln -s libisal.so.2 ${isal-cmake_BINARY_DIR}/libisal.so
 )
 
-install(FILES libisal.so libisal.so.2 libisal.so.2.13.0 DESTINATION lib${LIBSUFFIX})
-install(DIRECTORY intel/src/isal/include/ DESTINATION include/isa-l)
+install(FILES libisal.so libisal.so.2 libisal.so.2.13.0 
+        DESTINATION lib${LIBSUFFIX}
+        PERMISSIONS OWNER_READ GROUP_READ WORLD_READ OWNER_WRITE OWNER_EXECUTE GROUP_EXECUTE WORLD_EXECUTE)
+install(DIRECTORY intel/src/isal/include/ 
+        DESTINATION include/isa-l)
 
 set(CPACK_GENERATOR "RPM")
 set(CPACK_PACKAGE_CONTACT "paul.lensing@gmail.com")
