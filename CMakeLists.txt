@@ -3,7 +3,7 @@ project(isal-cmake C)
 include(ExternalProject)
 
 set(MAKEOPTIONS "")
-if("${CMAKE_SYSTEM_PROCESSOR}" STREQUAL "i386")
+if("${CMAKE_SYSTEM_PROCESSOR}" STREQUAL "i386" OR "${CMAKE_SYSTEM_PROCESSOR}" STREQUAL "i686")
     set(MAKEOPTIONS "arch=32")
 endif()
 
