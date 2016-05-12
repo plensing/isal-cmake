@@ -5,8 +5,10 @@ include(ExternalProject)
 get_property(LIB64 GLOBAL PROPERTY FIND_LIBRARY_USE_LIB64_PATHS)
 if ("${LIB64}" STREQUAL "TRUE")
     set(LIBSUFFIX 64)
+    set(MAKEOPTIONS "")
 else()
     set(LIBSUFFIX "")
+    set(MAKEOPTIONS "arch=32")
 endif()
 message(STATUS "Library installation directory is set to ${CMAKE_INSTALL_PREFIX}/lib${LIBSUFFIX}")
 
@@ -17,7 +19,7 @@ ExternalProject_add(
         URL_MD5 "f21ca06fc07857c71d574e59896c58d7"
         BUILD_IN_SOURCE 1
         CONFIGURE_COMMAND ""
-        BUILD_COMMAND "make"
+        BUILD_COMMAND make ${MAKEOPTIONS}
         INSTALL_COMMAND cp bin/libisal.so ${isal-cmake_BINARY_DIR}/libisal.so.2.13.0
         COMMAND ln -s libisal.so.2.13.0 ${isal-cmake_BINARY_DIR}/libisal.so.2
         COMMAND ln -s libisal.so.2 ${isal-cmake_BINARY_DIR}/libisal.so
