@@ -2,14 +2,18 @@ cmake_minimum_required(VERSION 2.8.6)
 project(isal-cmake C)
 include(ExternalProject)
 
-get_property(LIB64 GLOBAL PROPERTY FIND_LIBRARY_USE_LIB64_PATHS)
-if ("${LIB64}" STREQUAL "TRUE")
-    set(LIBSUFFIX 64)
-    set(MAKEOPTIONS "")
-else()
-    set(LIBSUFFIX "")
+set(MAKEOPTIONS "")
+if("${CMAKE_SYSTEM_PROCESSOR}" STREQUAL "i386")
     set(MAKEOPTIONS "arch=32")
 endif()
+
+get_property(LIB64 GLOBAL PROPERTY FIND_LIBRARY_USE_LIB64_PATHS)
+set(LIBSUFFIX "")
+if ("${LIB64}" STREQUAL "TRUE" AND "${CMAKE_SYSTEM_PROCESSOR}" STREQUAL "x86_64")
+    set(LIBSUFFIX 64)
+endif()
+
+message(STATUS "Detected ${CMAKE_SYSTEM_PROCESSOR} system architecture.")
 message(STATUS "Library installation directory is set to ${CMAKE_INSTALL_PREFIX}/lib${LIBSUFFIX}")
 
 ExternalProject_add(
